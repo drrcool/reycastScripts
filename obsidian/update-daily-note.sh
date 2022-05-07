@@ -16,7 +16,7 @@
 # @raycast.authorURL contact.richardcool.com
 
 export VAULT_PATH=/Users/rcool/obsidian/drrcool
-export DAILY_FOLDER="🕰 Periodic Notes/Daily"
+export DAILY_FOLDER="Periodic Notes/Daily"
 
 today=$(date +%Y-%m-%d)
 log_path=$VAULT_PATH/$DAILY_FOLDER/$today.md

@@ -15,38 +15,28 @@
 # @raycast.author Richard Cool
 # @raycast.authorURL contact.richardcool.com
 
-export VAULT_PATH=/Users/rcool/obsidian/drrcool
-export DAILY_FOLDER="🕰 Periodic Notes/Daily"
-export SEARCH_HEADING="Searches:"
-export TASK_FILE="🧰 Utilities/✔️ Tasks"
+export TASK_FILE="Utilities/✔️ Tasks"
 export TASK_HEADING="To Triage:"
-export LOG_TASK_HEADING="Tasks added Today:"
+export LOG_TASK_HEADING="Tasks added today:"
 export TASK_TAG="task"
+export VAULT="drrcool"
 
 # Create a random reference number
-ref=$(openssl rand -base64 8 |md5 |head -c6;echo)
+ref=$(date +%Y%m%d%H%M%S)
 today=$(date +%Y-%m-%d)
 task_text="$1" # Normally this will be passed as $1
+entry="- [ ] [[$today]] $task_text ^$ref"
 
-# Setup the new entry
-originalpath="$VAULT_PATH/$TASK_FILE.md"
-export original_content=$(cat "$originalpath")  
-export heading=$TASK_HEADING
-export entry="[ ] [[$today]] $task_text ^$ref"
+task_encode=$(python3 urlencode.py "$entry")
+file_encode=$(python3 urlencode.py "$TASK_FILE")
+heading_encode=$(python3 urlencode.py "$TASK_HEADING")
 
-new_text=$(python3 obsidian_tools.py --append)
-echo "$new_text"
-echo "$new_text" > "$originalpath"
+url="obsidian://advanced-uri?vault=$VAULT&filepath=$file_encode&mode=append&heading=$heading_encode&data=$task_encode"
+open "$url"
 
-# Now do the backlink
-log_path=$VAULT_PATH/$DAILY_FOLDER/$today.md
-log_original_text=$(cat "$log_path")
-
-export original_content=$log_original_text
-export heading=$LOG_TASK_HEADING
 export entry="#$TASK_TAG ![[$TASK_FILE#^$ref]]"
+heading_encode=$(python3 urlencode.py "$LOG_TASK_HEADING")
+entry_encode=$(python3 urlencode.py "$entry")
 
-new_text=$(python3 obsidian_tools.py --append)
-echo "$new_text" > "$log_path"
-
-echo "Task added and $DAILY_FOLDER/$today updated"
+url="obsidian://advanced-uri?vault=$VAULT&daily=true&mode=append&heading=$heading_encode&data=$entry_encode"
+open "$url"
