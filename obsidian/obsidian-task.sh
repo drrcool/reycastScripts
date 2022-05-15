@@ -25,14 +25,14 @@ export VAULT="drrcool"
 ref=$(date +%Y%m%d%H%M%S)
 today=$(date +%Y-%m-%d)
 task_text="$1" # Normally this will be passed as $1
-entry="- [ ] [[$today]] $task_text ^$ref"
+entry="- [ ] [[$today]] $task_text"
 
 task_encode=$(python3 urlencode.py "$entry")
 # file_encode=$(python3 urlencode.py "$TASK_FILE")
 # heading_encode=$(python3 urlencode.py "$TASK_HEADING")
 
-url="obsidian://advanced-uri?vault=$VAULT&filepath=$file_encode&mode=append&heading=$heading_encode&data=$task_encode"
-open "$url"
+# url="obsidian://advanced-uri?vault=$VAULT&filepath=$file_encode&mode=append&heading=$heading_encode&data=$task_encode"
+# open "$url"
 
 # export entry="#$TASK_TAG ![[$TASK_FILE#^$ref]]"
 heading_encode=$(python3 urlencode.py "$LOG_TASK_HEADING")
