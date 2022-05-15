@@ -28,15 +28,15 @@ task_text="$1" # Normally this will be passed as $1
 entry="- [ ] [[$today]] $task_text ^$ref"
 
 task_encode=$(python3 urlencode.py "$entry")
-file_encode=$(python3 urlencode.py "$TASK_FILE")
-heading_encode=$(python3 urlencode.py "$TASK_HEADING")
+# file_encode=$(python3 urlencode.py "$TASK_FILE")
+# heading_encode=$(python3 urlencode.py "$TASK_HEADING")
 
 url="obsidian://advanced-uri?vault=$VAULT&filepath=$file_encode&mode=append&heading=$heading_encode&data=$task_encode"
 open "$url"
 
-export entry="#$TASK_TAG ![[$TASK_FILE#^$ref]]"
+# export entry="#$TASK_TAG ![[$TASK_FILE#^$ref]]"
 heading_encode=$(python3 urlencode.py "$LOG_TASK_HEADING")
-entry_encode=$(python3 urlencode.py "$entry")
+# entry_encode=$(python3 urlencode.py "$entry")
 
-url="obsidian://advanced-uri?vault=$VAULT&daily=true&mode=append&heading=$heading_encode&data=$entry_encode"
+url="obsidian://advanced-uri?vault=$VAULT&daily=true&mode=append&heading=$heading_encode&data=$task_encode"
 open "$url"
